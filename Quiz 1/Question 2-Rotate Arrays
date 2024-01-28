@@ -1,0 +1,22 @@
+#include <iostream>
+
+using namespace std;
+
+void RightRotate (int a[], int h, int f){
+f=f%h;
+for(int i=0; i<h; i++){
+    if (i<f){
+        cout<<a[h+i-f]<<" ";
+        }
+        else {
+            cout<< (a[i-f])<<" ";
+        }
+}
+cout<<"\n";
+}
+int main (){
+int Array []={1,2,3,4,5};
+int H=sizeof(Array)/sizeof(Array[0]);
+int F=2;
+RightRotate(Array,H,F);
+}
