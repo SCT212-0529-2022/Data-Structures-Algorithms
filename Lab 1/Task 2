@@ -1,0 +1,171 @@
+#include <iostream>
+#include <string>
+
+const int MAX_STUDENTS = 40;
+
+struct Course {
+    std::string course_code;
+    std::string course_name;
+};
+
+struct Grade {
+    int mark;
+    char the_grade;
+};
+
+struct Student {
+    std::string reg_number;
+    std::string name;
+    int age;
+    Course course;
+    Grade grades;
+};
+
+char calculateGrade(int mark) {
+    if (mark > 69) return 'A';
+    else if (mark > 59) return 'B';
+    else if (mark > 49) return 'C';
+    else if (mark > 39) return 'D';
+    else return 'E';
+}
+
+void addStudent(Student students[], int& numStudents) {
+    if (numStudents < MAX_STUDENTS) {
+        Student newStudent;
+
+        std::cout << "Enter registration number: ";
+        std::cin >> newStudent.reg_number;
+
+        std::cout << "Enter name: ";
+        std::cin.ignore(); 
+        std::getline(std::cin, newStudent.name);
+
+        std::cout << "Enter age: ";
+        std::cin >> newStudent.age;
+
+        std::cout << "Enter course code: ";
+        std::cin >> newStudent.course.course_code;
+
+        std::cout << "Enter course name: ";
+        std::cin.ignore();
+        std::getline(std::cin, newStudent.course.course_name);
+
+        newStudent.grades.mark = -1;
+        newStudent.grades.the_grade = 'N';  
+
+        students[numStudents++] = newStudent;
+
+        std::cout << "Student added successfully.\n";
+    } else {
+        std::cout << "Maximum number of students reached.\n";
+    }
+}
+
+void editStudentDetails(Student students[], int numStudents) {
+    std::string regNumber;
+    std::cout << "Enter registration number of the student to edit: ";
+    std::cin >> regNumber;
+
+    for (int i = 0; i < numStudents; i++) {
+        if (students[i].reg_number == regNumber) {
+            std::cout << "Enter new name: ";
+            std::cin.ignore();
+            std::getline(std::cin, students[i].name);
+
+            std::cout << "Enter new age: ";
+            std::cin >> students[i].age;
+
+            std::cout << "Student details updated successfully.\n";
+            return;
+        }
+    }
+
+    std::cout << "Student not found.\n";
+}
+
+void addMarksAndCalculateGrades(Student students[], int numStudents) {
+    std::string regNumber;
+    std::cout << "Enter registration number of the student to add marks: ";
+    std::cin >> regNumber;
+
+    for (int i = 0; i < numStudents; i++) {
+        if (students[i].reg_number == regNumber) {
+            std::cout << "Enter marks for " << students[i].name << ": ";
+            std::cin >> students[i].grades.mark;
+
+            students[i].grades.the_grade = calculateGrade(students[i].grades.mark);
+
+            std::cout << "Marks and grades added successfully.\n";
+            return;
+        }
+    }
+
+    std::cout << "Student not found.\n";
+}
+
+void displayStudentDetails(const Student& student) {
+    std::cout << "Registration Number: " << student.reg_number << "\n";
+    std::cout << "Name: " << student.name << "\n";
+    std::cout << "Age: " << student.age << "\n";
+    std::cout << "Course Code: " << student.course.course_code << "\n";
+    std::cout << "Course Name: " << student.course.course_name << "\n";
+
+    if (student.grades.mark != -1) {
+        std::cout << "Marks: " << student.grades.mark << "\n";
+        std::cout << "Grade: " << student.grades.the_grade << "\n";
+    } else {
+        std::cout << "Marks and Grade not available.\n";
+    }
+
+    std::cout << "-----------------------------\n";
+}
+
+void displayAllStudents(const Student students[], int numStudents) {
+    if (numStudents == 0) {
+        std::cout << "No students available.\n";
+        return;
+    }
+
+    for (int i = 0; i < numStudents; i++) {
+        displayStudentDetails(students[i]);
+    }
+}
+
+int main() {
+    Student students[MAX_STUDENTS];
+    int numStudents = 0;
+    int choice;
+
+    do {
+        std::cout << "\n1. Add a student\n";
+        std::cout << "2. Edit student details\n";
+        std::cout << "3. Add marks and calculate grades\n";
+        std::cout << "4. Display all students\n";
+        std::cout << "5. Exit\n";
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+
+        switch (choice) {
+            case 1:
+                addStudent(students, numStudents);
+                break;
+            case 2:
+                editStudentDetails(students, numStudents);
+                break;
+            case 3:
+                addMarksAndCalculateGrades(students, numStudents);
+                break;
+            case 4:
+                displayAllStudents(students, numStudents);
+                break;
+            case 5:
+                std::cout << "Exiting the program.\n";
+                break;
+            default:
+                std::cout << "Invalid choice. Please try again.\n";
+        }
+
+    } while (choice != 5);
+
+    return 0;
+}
