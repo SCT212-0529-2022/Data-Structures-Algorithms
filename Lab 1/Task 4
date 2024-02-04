@@ -1,0 +1,48 @@
+Class Diagram
+@startuml
+class List {
+    -size: int
+    ---------------------
+    +Insert(index: int, element: ElementType): void
+    +Delete(index: int): void
+    +Retrieve(index: int): ElementType
+    +Size(): int
+}
+@enduml
+
+In this class diagram:
+
+List is the name of the class representing the ADT.
+-size: int indicates that there is a private member variable size representing the number of elements in the list.
+Insert(index: int, element: ElementType): void represents the operation to insert an element at a specific index.
+Delete(index: int): void represents the operation to delete an element at a specific index.
+Retrieve(index: int): ElementType represents the operation to retrieve an element at a specific index.
+Size(): int represents the operation to get the current size of the list.
+
+
+Sequence Diagram for Insert Operation:
+
+@startuml
+actor User
+participant List
+
+User -> List: Insert(index, element)
+List -> List: Validate index
+List -> List: Ensure space
+List -> List: Shift elements
+List -> List: Insert element at index
+@enduml
+
+
+Sequence Diagram for Delete Operation:
+
+@startuml
+actor User
+participant List
+
+User -> List: Delete(index)
+List -> List: Validate index
+List -> List: Shift elements
+List -> List: Reduce size
+@enduml
+
