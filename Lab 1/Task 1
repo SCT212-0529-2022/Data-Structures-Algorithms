@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+int summation(int arr[], int n) {
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += arr[i];
+    }
+    return sum;
+}
+
+int maximum(int arr[], int n) {
+    int max = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+int main() {
+    int n;
+    printf("Enter the length of the array (n): ");
+    scanf("%d", &n);
+
+    int Array[n];
+
+    printf("Enter %d integers:\n", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &Array[i]);
+    }
+
+    int sumResult = summation(Array, n);
+    printf("Sum of the integers: %d\n", sumResult);
+
+    int maxResult = maximum(Array, n);
+    printf("Maximum integer in the array: %d\n", maxResult);
+
+    return 0;
+}
